@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplication1
 {
@@ -16,19 +17,43 @@ namespace WebApplication1
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IGreeter, Greeter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IGreeter greeter, ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
+            // if (env.IsDevelopment())
+            // {
+            //     app.UseDeveloperExceptionPage();
+            // }
+
+            //next here is used to pass the request to the next middleware
+            app.Use(next =>
+                async (context) =>
+                {
+                    if (context.Request.Path.StartsWithSegments("/hello"))
+                    {
+                        await context.Response.WriteAsync("Delegate Middleware hit");
+                        logger.LogInformation("Request handled by the delegate");
+                    }
+                    else
+                    {
+                        await next(context);
+                        logger.LogInformation("Request handled by  the next middleware");
+                    }
+                }
+                    );
+
+            app.UseWelcomePage(new WelcomePageOptions
             {
-                app.UseDeveloperExceptionPage();
-            }
+                Path = "/wp"
+            });
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync(configuration["Greeting"]);
+                string greeting = greeter.GetMessage();
+                await context.Response.WriteAsync(greeting);
             });
         }
     }
