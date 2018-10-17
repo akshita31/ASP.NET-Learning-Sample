@@ -18,15 +18,17 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
+            services.AddMvc(); //without this we will get an error that the reuired services were not found when
+            //the mvc is being used
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IGreeter greeter, ILogger<Startup> logger)
         {
-            // if (env.IsDevelopment())
-            // {
-            //     app.UseDeveloperExceptionPage();
-            // }
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             //next here is used to pass the request to the next middleware
             app.Use(next =>
@@ -45,6 +47,10 @@ namespace WebApplication1
                 }
                     );
 
+                    app.UseMvcWithDefaultRoute();
+            
+            app.UseStaticFiles();
+
             app.UseWelcomePage(new WelcomePageOptions
             {
                 Path = "/wp"
@@ -53,7 +59,7 @@ namespace WebApplication1
             app.Run(async (context) =>
             {
                 string greeting = greeter.GetMessage();
-                await context.Response.WriteAsync(greeting);
+                await context.Response.WriteAsync("hello world");
             });
         }
     }
