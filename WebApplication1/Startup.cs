@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -47,8 +48,8 @@ namespace WebApplication1
                 }
                     );
 
-                    app.UseMvcWithDefaultRoute();
-            
+            app.UseMvc(ConfigureRoutes);
+
             app.UseStaticFiles();
 
             app.UseWelcomePage(new WelcomePageOptions
@@ -61,6 +62,11 @@ namespace WebApplication1
                 string greeting = greeter.GetMessage();
                 await context.Response.WriteAsync("hello world");
             });
+        }
+
+        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        {
+            routeBuilder.MapRoute("Default", "{controller=home}/{action=index}/{id?}");
         }
     }
 }
