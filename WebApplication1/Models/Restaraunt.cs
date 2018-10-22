@@ -2,12 +2,7 @@ namespace SampleApplication.Models
 {
     public class Restaraunt
     {
-        int Id;
-        string Name;
-        public Restaraunt(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
