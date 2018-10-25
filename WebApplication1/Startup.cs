@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SampleApplication.Services;
 
 namespace WebApplication1
 {
@@ -21,6 +22,7 @@ namespace WebApplication1
             services.AddSingleton<IGreeter, Greeter>();
             services.AddMvc(); //without this we will get an error that the reuired services were not found when
             //the mvc is being used
+            services.AddScoped<IRestaurantData, InMemoryRestaraunt>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

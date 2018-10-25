@@ -1,7 +1,15 @@
-@model SampleApplication.Models.
+@model IEnumerable<SampleApplication.Models.Restaraunt>
+
 <html>
     <body>
-        <h1>@Model.Name</h1>
+        <h1>Name of restaurnars</h1>
+        <table>
+            @foreach (var restauanr in Model)
+            {
+                    <tr>@restauanr.Name</tr>
+            }
+            
+        </table>
         This is the index view
     </body>
 </html>
