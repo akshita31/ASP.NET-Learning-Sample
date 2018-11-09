@@ -1,12 +1,20 @@
-@model IEnumerable<SampleApplication.Models.Restaraunt>
+@model SampleApplication.ViewModels.HomeIndexViewModel
 
 <html>
     <body>
-        <h1>Name of restaurnars</h1>
+		<h1>@Model.Message </h1>
+        <h1>Name of restaraunts</h1>
+
         <table>
-            @foreach (var restauanr in Model)
+            @foreach (var restaurant in Model.Restaraunts)
             {
-                    <tr>@restauanr.Name</tr>
+                <tr>
+                        <td>@restaurant.Name </td>
+                    <td>@restaurant.Id</td>
+                    <td><a href = "/home/details/@restaurant.Id">Details</a></td>
+                    <td><a asp-action = "Details" asp-route-id = "@restaurant.Id">More details</a></td>
+                    <td><a asp-action = "Create">Create</a></td>
+                </tr>
             }
             
         </table>

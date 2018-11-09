@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SampleApplication.Models;
+using System.Linq;
 
 namespace SampleApplication.Services
 {
@@ -16,6 +17,11 @@ namespace SampleApplication.Services
         public IEnumerable<Restaraunt> GetAll()
         {
             return _restaraunts;
+        }
+
+        public Restaraunt Get(int id)
+        {
+            return _restaraunts.FirstOrDefault(r => r.Id == id);
         }
 
         private List<Restaraunt> _restaraunts;
