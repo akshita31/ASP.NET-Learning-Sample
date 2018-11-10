@@ -24,6 +24,13 @@ namespace SampleApplication.Services
             return _restaraunts.FirstOrDefault(r => r.Id == id);
         }
 
+        public Restaraunt Add(Restaraunt restaraunt)
+        {
+            _restaraunts.Add(restaraunt);
+
+            return restaraunt;
+        }
+
         private List<Restaraunt> _restaraunts;
     }
 }

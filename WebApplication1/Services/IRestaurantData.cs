@@ -7,5 +7,7 @@ namespace SampleApplication.Services
     {
         IEnumerable<Restaraunt> GetAll();
         Restaraunt Get(int id);
+
+        Restaraunt Add(Restaraunt restaraunt);
     }
 }
