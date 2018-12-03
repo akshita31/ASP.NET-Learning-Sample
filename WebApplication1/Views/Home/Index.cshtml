@@ -1,5 +1,9 @@
 @model SampleApplication.ViewModels.HomeIndexViewModel
 
+	@{
+		ViewBag.Title = "Home Page";
+		Layout = "~/Views/Shared/_Layout.cshtml";
+	}
 <html>
     <body>
 		<h1>@Model.Message </h1>
@@ -13,10 +17,9 @@
                     <td>@restaurant.Id</td>
                     <td><a href = "/home/details/@restaurant.Id">Details</a></td>
                     <td><a asp-action = "Details" asp-route-id = "@restaurant.Id">More details</a></td>
-                    <td><a asp-action="Create" >Create</a></td>
                 </tr>
             }
-            
+            <tr><a asp-action="Create" >Create</a></tr>
         </table>
         This is the index view
     </body>
