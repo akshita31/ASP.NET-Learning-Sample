@@ -13,7 +13,7 @@
             @foreach (var restaurant in Model.Restaraunts)
             {
                 <tr>
-                        <td>@restaurant.Name </td>
+                    <td>@restaurant.Name </td>
                     <td>@restaurant.Id</td>
                     <td><a href = "/home/details/@restaurant.Id">Details</a></td>
                     <td><a asp-action = "Details" asp-route-id = "@restaurant.Id">More details</a></td>
